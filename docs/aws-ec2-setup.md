@@ -37,5 +37,14 @@ The configuration includes:
 - SSH key-based authentication
 - EBS volume encryption
 - No default AWS service access
-- IMDSv2-only configuration where instance metadata is enabled
+- EC2 Instance Metadata Service (IMDSv2) enforced with token-based authentication and a response hop limit of 1.
 
+### Network Security
+
+The EC2 instance is deployed within an AWS Virtual Private Cloud (VPC) and protected by an EC2 security group.
+
+- Administrative SSH (TCP/22) is restricted to a trusted public IP address using a `/32` CIDR rule.
+- HTTP (TCP/80) and HTTPS (TCP/443) inbound access are disabled.
+- The Cowrie SSH honeypot listener will be configured separately on TCP/2222.
+- Outbound traffic restrictions will be reviewed before exposing the honeypot to the internet.
+- Administrative access uses SSH public-key authentication rather than password-based authentication.
